@@ -13,7 +13,7 @@
       --gold:#d4af37;
       --red1:#b30000;
       --red2:#ff1a1a;
-      --white: #ffffff;
+      --white:#ffffff;
     }
 
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
@@ -108,8 +108,8 @@
     }
     .btn.small{
       padding: 12px 20px;
-      margin-top: auto;      /* aligns buttons at bottom */
-      align-self: center;    /* centers buttons */
+      margin-top: auto;
+      align-self: center;
     }
 
     /* ---------- Sections ---------- */
@@ -176,6 +176,11 @@
       display:flex;
       flex-direction: column;
       min-height: 320px;
+
+      /* stagger initial state (only used for pricing cards; league overrides below) */
+      opacity: 0;
+      transform: translateY(18px);
+      will-change: opacity, transform;
     }
     .price-card:hover{
       transform: translateY(-4px);
@@ -236,23 +241,43 @@
       box-shadow: 0 6px 18px rgba(212,175,55,0.55);
     }
 
-    /* Premium glow for featured */
+    /* Premium glow for featured (only after reveal) */
     @keyframes premiumGlow{
       0%   { box-shadow: 0 0 0 rgba(212,175,55,0.18); }
       50%  { box-shadow: 0 0 24px rgba(212,175,55,0.38); }
       100% { box-shadow: 0 0 0 rgba(212,175,55,0.18); }
     }
+
+    /* ---------- Stagger reveal (pricing cards) ---------- */
+    .price-card.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
     .price-card.featured.is-visible{
+      transform: translateY(0) scale(1.02);
       animation: premiumGlow 3.5s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .price-card, .price-card.is-visible{
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+      }
+      .price-card.featured .badge{ animation: none !important; }
     }
 
     /* ---------- JCR League section ---------- */
     #league{ margin-top: 80px; }
 
-    #league .price-card {
-  opacity: 1;
-  transform: none;
-}
+    /* League card should NOT start hidden */
+    #league .price-card{
+      opacity: 1;
+      transform: none;
+      transition: 0.25s;
+    }
 
     .league-features{
       list-style:none;
@@ -364,30 +389,6 @@
     .pay-btn.paypal{ background: rgba(255,255,255,0.08); }
     .basket-small{ display:block; margin-top: 10px; opacity: 0.75; }
 
-    /* ---------- Stagger reveal (pricing cards) ---------- */
-    .price-card{
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 650ms ease, transform 650ms ease;
-      will-change: opacity, transform;
-    }
-    .price-card.is-visible{
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .price-card.featured.is-visible{
-      transform: translateY(0) scale(1.02);
-    }
-    @media (prefers-reduced-motion: reduce){
-      .price-card, .price-card.is-visible{
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-        animation: none !important;
-      }
-      .price-card.featured .badge{ animation: none !important; }
-    }
-
     /* ---------- Responsive ---------- */
     @media (max-width: 900px){
       .features{ flex-direction: column; }
@@ -472,7 +473,8 @@
             <li>Frequent updates</li>
             <li>Premium support tickets</li>
           </ul>
-          <button class="btn small" type="button" onclick="addToBasket('JCR Premium', 14.99)">Add to Basket</button>
+          <!-- NOTE: uses productId now -->
+          <button class="btn small" type="button" onclick="addToBasket('premium')">Add to Basket</button>
         </div>
 
         <div class="price-card">
@@ -484,7 +486,7 @@
             <li>Frequent updates</li>
             <li>Setup tuning tickets</li>
           </ul>
-          <button class="btn small" type="button" onclick="addToBasket('All Setups', 12.99)">Add to Basket</button>
+          <button class="btn small" type="button" onclick="addToBasket('setups')">Add to Basket</button>
         </div>
 
         <div class="price-card">
@@ -496,7 +498,7 @@
             <li>Regular updates</li>
             <li>Tyre, battery + fuel info for every track</li>
           </ul>
-          <button class="btn small" type="button" onclick="addToBasket('All Strategies', 6.99)">Add to Basket</button>
+          <button class="btn small" type="button" onclick="addToBasket('strategies')">Add to Basket</button>
         </div>
 
       </div>
@@ -617,11 +619,23 @@
       observer.observe(pricingSection);
     });
 
-    // ------- Basket / checkout logic -------
+    // ------- Basket / checkout logic (PRODUCT IDS so it never breaks) -------
     const PRODUCTS = {
-      "JCR Premium (Full Access)": { price: 14.99, stripe: "https://buy.stripe.com/5kQ4gy9aIbzXcv64t86kg01" },
-      "All Setups": { price: 12.99, stripe: "https://buy.stripe.com/4gM6oG0EcbzX9iUbVA6kg02" },
-      "All Strategies": { price:  6.99, stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03" }
+      premium: {
+        name: "JCR Premium (Full Access)",
+        price: 14.99,
+        stripe: "https://buy.stripe.com/5kQ4gy9aIbzXcv64t86kg01"
+      },
+      setups: {
+        name: "All Setups",
+        price: 12.99,
+        stripe: "https://buy.stripe.com/4gM6oG0EcbzX9iUbVA6kg02"
+      },
+      strategies: {
+        name: "All Strategies",
+        price: 6.99,
+        stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03"
+      }
     };
 
     const PAYPAL_USERNAME = "jackmaltbysmith";
@@ -656,16 +670,19 @@
         setCheckoutState({ disabled: true, stripeText: "Add a product to checkout" });
         return;
       }
+
       const item = basket[0];
-      const product = PRODUCTS[item.name];
+      const product = PRODUCTS[item.id];
+
       if (!product || !product.stripe){
         setCheckoutState({ disabled: true, stripeText: "Checkout not configured" });
         return;
       }
+
       setCheckoutState({
         disabled: false,
         stripeHref: product.stripe,
-        paypalHref: paypalLinkForAmount(item.price),
+        paypalHref: paypalLinkForAmount(product.price),
         stripeText: "Pay with Card / Apple Pay (Stripe)"
       });
     }
@@ -685,6 +702,7 @@
       } else {
         basket.forEach((item, idx) => {
           total += item.price;
+
           const div = document.createElement("div");
           div.className = "basket-item";
           div.innerHTML = `
@@ -702,10 +720,14 @@
       updateCheckoutLinks();
     }
 
-    function addToBasket(name, price){
-      if (PRODUCTS[name]) price = PRODUCTS[name].price;
-      basket.length = 0; // one item max (membership style)
-      basket.push({ name, price });
+    // productId-based add (one item max)
+    function addToBasket(productId){
+      const p = PRODUCTS[productId];
+      if (!p) return;
+
+      basket.length = 0;
+      basket.push({ id: productId, name: p.name, price: p.price });
+
       updateBasketUI();
       toggleBasket(true);
     }
