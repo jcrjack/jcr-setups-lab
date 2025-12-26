@@ -322,85 +322,153 @@
     </div>
   </aside>
 
-  <script>
-    // Put your real links here
-    const CHECKOUT_LINKS = {
-      stripe: "https://buy.stripe.com/test_4gMeVc8ao0Xv9DIgpdenS00",
-      paypal: "https://paypal.me/jackmaltbysmith"
-    };
+ <script>
+  // ====== EDIT THESE 3 STRIPE LINKS ======
+  const PRODUCTS = {
+    "JCR Premium": {
+      price: 14.99,
+      stripe: "https://buy.stripe.com/5kQ4gy9aIbzXcv64t86kg01"
+    },
+    "All Setups": {
+      price: 12.99,
+      stripe: "https://buy.stripe.com/4gM6oG0EcbzX9iUbVA6kg02"
+    },
+    "All Strategies": {
+      price: 6.99,
+      stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03"
+    }
+  };
 
-    const basket = [];
+  // Your PayPal.me username
+  const PAYPAL_USERNAME = "jackmaltbysmith";
+  const CURRENCY_CODE = "GBP";
 
-    function money(n) {
-      return "£" + n.toFixed(2);
+  // Basket will contain ONE item max (membership style)
+  const basket = [];
+
+  function money(n) {
+    return "£" + n.toFixed(2);
+  }
+
+  function paypalLinkForAmount(amount) {
+    return `https://paypal.me/${encodeURIComponent(PAYPAL_USERNAME)}/${amount.toFixed(2)}?currencyCode=${encodeURIComponent(CURRENCY_CODE)}`;
+  }
+
+  function setCheckoutState({ disabled, stripeHref = "#", paypalHref = "#", stripeText }) {
+    const stripeBtn = document.getElementById("stripeCheckoutBtn");
+    const paypalBtn = document.getElementById("paypalCheckoutBtn");
+
+    if (stripeBtn) {
+      stripeBtn.href = stripeHref;
+      stripeBtn.style.pointerEvents = disabled ? "none" : "auto";
+      stripeBtn.style.opacity = disabled ? "0.55" : "1";
+      stripeBtn.textContent = stripeText || "Pay with Card / Apple Pay (Stripe)";
     }
 
-    function updateBasketUI() {
-      const basketCountEl = document.getElementById("basketCount");
-      const basketItemsEl = document.getElementById("basketItems");
-      const basketTotalEl = document.getElementById("basketTotal");
+    if (paypalBtn) {
+      paypalBtn.href = paypalHref;
+      paypalBtn.style.pointerEvents = disabled ? "none" : "auto";
+      paypalBtn.style.opacity = disabled ? "0.55" : "1";
+      paypalBtn.textContent = "Pay with PayPal";
+    }
+  }
 
-      if (basketCountEl) basketCountEl.textContent = basket.length;
-
-      let total = 0;
-      if (basketItemsEl) basketItemsEl.innerHTML = "";
-
-      if (basket.length === 0) {
-        if (basketItemsEl) basketItemsEl.innerHTML = `<p style="opacity:0.85;">Your basket is empty.</p>`;
-      } else {
-        basket.forEach((item, idx) => {
-          total += item.price;
-
-          const div = document.createElement("div");
-          div.className = "basket-item";
-          div.innerHTML = `
-            <div>
-              <strong>${item.name}</strong>
-              <span style="opacity:0.9;">${money(item.price)}</span>
-            </div>
-            <button class="remove-btn" type="button" onclick="removeFromBasket(${idx})">Remove</button>
-          `;
-          basketItemsEl.appendChild(div);
-        });
-      }
-
-      if (basketTotalEl) basketTotalEl.textContent = money(total);
-
-      const stripeBtn = document.getElementById("stripeCheckoutBtn");
-      const paypalBtn = document.getElementById("paypalCheckoutBtn");
-      if (stripeBtn) stripeBtn.href = CHECKOUT_LINKS.stripe;
-      if (paypalBtn) paypalBtn.href = CHECKOUT_LINKS.paypal;
+  function updateCheckoutLinks() {
+    if (basket.length === 0) {
+      setCheckoutState({
+        disabled: true,
+        stripeText: "Add a product to checkout"
+      });
+      return;
     }
 
-    function addToBasket(name, price) {
-      basket.push({ name, price });
-      updateBasketUI();
-      toggleBasket(true);
+    const item = basket[0];
+    const product = PRODUCTS[item.name];
+
+    if (!product || !product.stripe) {
+      setCheckoutState({
+        disabled: true,
+        stripeText: "Checkout not configured"
+      });
+      return;
     }
 
-    function removeFromBasket(index) {
-      basket.splice(index, 1);
-      updateBasketUI();
+    setCheckoutState({
+      disabled: false,
+      stripeHref: product.stripe,
+      paypalHref: paypalLinkForAmount(item.price),
+      stripeText: "Pay with Card / Apple Pay (Stripe)"
+    });
+  }
+
+  function updateBasketUI() {
+    const basketCountEl = document.getElementById("basketCount");
+    const basketItemsEl = document.getElementById("basketItems");
+    const basketTotalEl = document.getElementById("basketTotal");
+
+    if (basketCountEl) basketCountEl.textContent = basket.length;
+
+    let total = 0;
+    if (basketItemsEl) basketItemsEl.innerHTML = "";
+
+    if (basket.length === 0) {
+      if (basketItemsEl) basketItemsEl.innerHTML = `<p style="opacity:0.85;">Your basket is empty.</p>`;
+    } else {
+      basket.forEach((item, idx) => {
+        total += item.price;
+
+        const div = document.createElement("div");
+        div.className = "basket-item";
+        div.innerHTML = `
+          <div>
+            <strong>${item.name}</strong>
+            <span style="opacity:0.9;">${money(item.price)}</span>
+          </div>
+          <button class="remove-btn" type="button" onclick="removeFromBasket(${idx})">Remove</button>
+        `;
+        basketItemsEl.appendChild(div);
+      });
     }
 
-    function toggleBasket(open) {
-      const drawer = document.getElementById("basketDrawer");
-      const overlay = document.getElementById("basketOverlay");
+    if (basketTotalEl) basketTotalEl.textContent = money(total);
 
-      if (!drawer || !overlay) return;
+    updateCheckoutLinks();
+  }
 
-      if (open) {
-        drawer.classList.add("open");
-        drawer.setAttribute("aria-hidden", "false");
-        overlay.style.display = "block";
-      } else {
-        drawer.classList.remove("open");
-        drawer.setAttribute("aria-hidden", "true");
-        overlay.style.display = "none";
-      }
-    }
+  // ONE-ITEM cart: adding a product replaces the current one
+  function addToBasket(name, price) {
+    if (PRODUCTS[name]) price = PRODUCTS[name].price; // keep prices consistent
+
+    basket.length = 0;
+    basket.push({ name, price });
 
     updateBasketUI();
-  </script>
+    toggleBasket(true);
+  }
+
+  function removeFromBasket(index) {
+    basket.splice(index, 1);
+    updateBasketUI();
+  }
+
+  function toggleBasket(open) {
+    const drawer = document.getElementById("basketDrawer");
+    const overlay = document.getElementById("basketOverlay");
+    if (!drawer || !overlay) return;
+
+    if (open) {
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden", "false");
+      overlay.style.display = "block";
+    } else {
+      drawer.classList.remove("open");
+      drawer.setAttribute("aria-hidden", "true");
+      overlay.style.display = "none";
+    }
+  }
+
+  // Init
+  updateBasketUI();
+</script>
 </body>
 </html>
