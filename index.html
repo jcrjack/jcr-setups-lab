@@ -3,176 +3,399 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JCR Setups Lab</title>
+  <title>JCR Setups Lab 🧪</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    :root{
+      --bg:#000435;
+      --panel:#070a3d;
+      --gold:#d4af37;
+      --red1:#b30000;
+      --red2:#ff1a1a;
+      --white: #ffffff;
+    }
 
-    body { background-color: #000435; color: white; min-height: 100vh; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    body { background: var(--bg); color: var(--white); min-height: 100vh; }
 
-    header { text-align: center; padding: 80px 20px; }
-    header h1 { font-size: 3rem; font-weight: 600; }
-    header p { margin-top: 15px; font-size: 1.2rem; opacity: 0.9; }
+    /* ---------- Navbar ---------- */
+    .navbar{
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(0, 4, 53, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand{
+      color: var(--gold);
+      text-decoration:none;
+      font-weight:600;
+      letter-spacing:0.5px;
+      white-space: nowrap;
+    }
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a{
+      color: var(--white);
+      text-decoration:none;
+      opacity:0.9;
+    }
+    .nav-links a:hover{ opacity: 1; }
 
-    .logo { width: 280px; margin-bottom: 20px; border: 2px solid #d4af37; }
-    .tagline { color: #d4af37; font-size: 1.3rem; margin-top: 10px; }
+    .basket-btn{
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--white);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      display:flex;
+      align-items:center;
+      gap: 8px;
+    }
+    .basket-count{
+      background: var(--gold);
+      color: var(--bg);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
 
-    .btn {
-      display: inline-block;
+    /* ---------- Header ---------- */
+    header{ text-align:center; padding: 80px 20px; }
+    header h1{ font-size: 3rem; font-weight: 600; }
+    .logo{ width: 280px; margin-bottom: 20px; border: 2px solid var(--gold); }
+    .tagline{ color: var(--gold); font-size: 1.3rem; margin-top: 10px; opacity: 0.95; }
+
+    /* ---------- Buttons ---------- */
+    .btn{
+      display:inline-block;
       margin-top: 30px;
       padding: 14px 36px;
-      background: linear-gradient(135deg, #b30000, #ff1a1a);
-      color: white;
-      text-decoration: none;
+      background: linear-gradient(135deg, var(--red1), var(--red2));
+      color: var(--white);
+      text-decoration:none;
       border-radius: 30px;
       font-weight: 600;
-      transition: 0.3s;
       border: none;
       cursor: pointer;
+      transition: 0.25s;
+      text-align:center;
     }
-    .btn:hover { background: linear-gradient(135deg, #ff1a1a, #ff4d4d); transform: scale(1.05); }
+    .btn:hover{
+      background: linear-gradient(135deg, var(--red2), #ff4d4d);
+      transform: scale(1.05);
+    }
+    .btn.small{
+      padding: 12px 20px;
+      margin-top: auto;      /* aligns buttons at bottom */
+      align-self: center;    /* centers buttons */
+    }
 
-    section { margin: 60px auto; padding: 0 20px; text-align: center; line-height: 1.7; max-width: 900px; }
-    section h2 { font-size: 2.2rem; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
+    /* ---------- Sections ---------- */
+    section{
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align:center;
+      line-height: 1.7;
+      max-width: 900px;
+    }
+    section h2{
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
-    .features-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .features-wrapper{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-    .features {
-      display: flex;
-      flex-direction: row;
+    /* ---------- What we offer cards ---------- */
+    .features{
+      display:flex;
       gap: 30px;
       margin-top: 50px;
       justify-content: space-between;
       align-items: stretch;
     }
-
-    .card {
-      background: linear-gradient(135deg, #b30000, #ff1a1a);
-      border: 3px solid #d4af37;
+    .card{
+      background: linear-gradient(135deg, var(--red1), var(--red2));
+      border: 3px solid var(--gold);
       border-radius: 18px;
       padding: 30px;
       flex: 1;
       text-align: center;
-      transition: 0.3s;
+      transition: 0.25s;
     }
-    .card h3 { margin-bottom: 10px; font-size: 1.2rem; }
-    .card p { opacity: 0.95; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); }
-
-    footer { text-align: center; padding: 30px; opacity: 0.7; font-size: 0.9rem; }
-
-    @media (max-width: 900px) { .features { flex-direction: column; } }
-
-    /* Navbar */
-    .navbar {
-      position: sticky; top: 0; z-index: 1000;
-      background: rgba(0, 4, 53, 0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-    }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto; padding: 14px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .brand { color: #d4af37; text-decoration: none; font-weight: 600; letter-spacing: 0.5px; }
-    .nav-links { display: flex; align-items: center; gap: 16px; }
-    .nav-links a { color: white; text-decoration: none; opacity: 0.9; }
-    .nav-links a:hover { opacity: 1; }
-
-    .basket-btn {
-      background: transparent; border: 2px solid #d4af37; color: white;
-      padding: 8px 14px; border-radius: 999px; cursor: pointer; font-weight: 600;
-    }
-    .basket-count {
-      display: inline-block; margin-left: 8px; background: #d4af37; color: #000435;
-      padding: 2px 8px; border-radius: 999px; font-size: 0.9rem;
+    .card h3{ margin-bottom: 10px; font-size: 1.2rem; }
+    .card p{ opacity: 0.95; }
+    .card:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
 
-    /* Pricing */
-    .pricing-grid {
-      display: grid;
+    /* ---------- Pricing ---------- */
+    .pricing-grid{
+      display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 22px;
       margin-top: 18px;
       text-align: left;
     }
 
-    .price-card {
-      background: rgba(255, 255, 255, 0.06);
-      border: 2px solid rgba(212, 175, 55, 0.35);
+    .price-card{
+      background: rgba(255,255,255,0.06);
+      border: 2px solid rgba(212,175,55,0.35);
       border-radius: 18px;
-      padding: 26px;
+      padding: 38px 26px 26px; /* extra top padding for badge */
       position: relative;
-      transition: 0.3s;
+      transition: 0.25s;
+      display:flex;
+      flex-direction: column;
+      min-height: 320px;
     }
-    .price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45); }
-
-    .badge {
-      position: absolute; top: 14px; right: 14px;
-      background: #d4af37; color: #000435;
-      font-weight: 700; font-size: 0.75rem; padding: 6px 10px; border-radius: 999px;
+    .price-card:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.45);
     }
 
-    .price { font-size: 2.2rem; font-weight: 700; margin: 10px 0 14px; color: white; }
-    .price-card ul { list-style: none; padding-left: 0; margin: 0 0 18px; opacity: 0.95; }
-    .price-card li { margin: 10px 0; }
-
-    .btn.small { padding: 12px 20px; margin-top: 10px; }
-
-    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } }
-
-    /* Basket drawer */
-    .basket-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.55);
-      display: none; z-index: 1100;
+    /* centered gold badge ABOVE card */
+    .badge{
+      position:absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gold);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 6px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+      z-index: 2;
+      box-shadow: 0 6px 18px rgba(212,175,55,0.45);
+      letter-spacing: 0.5px;
     }
-    .basket-drawer {
-      position: fixed; top: 0; right: 0;
-      height: 100vh; width: min(420px, 92vw);
-      background: #070a3d;
-      border-left: 2px solid rgba(212, 175, 55, 0.35);
+
+    .price{
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 10px 0 14px;
+      color: var(--white);
+    }
+    .price-card ul{
+      list-style:none;
+      padding-left:0;
+      margin: 0 0 18px;
+      opacity: 0.95;
+    }
+    .price-card li{ margin: 10px 0; }
+
+    /* Featured card (BEST VALUE) */
+    .price-card.featured{
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(212,175,55,0.18);
+      z-index: 3;
+    }
+
+    /* Hover rules (avoid transform conflicts) */
+    .price-card:not(.featured):hover{ transform: translateY(-4px); }
+    .price-card.featured:hover{ transform: translateY(-2px) scale(1.04); }
+
+    /* Badge float for featured */
+    @keyframes badgeFloat{
+      0%   { transform: translateX(-50%) translateY(0); }
+      50%  { transform: translateX(-50%) translateY(-4px); }
+      100% { transform: translateX(-50%) translateY(0); }
+    }
+    .price-card.featured .badge{
+      animation: badgeFloat 2.5s ease-in-out infinite;
+      box-shadow: 0 6px 18px rgba(212,175,55,0.55);
+    }
+
+    /* Premium glow for featured */
+    @keyframes premiumGlow{
+      0%   { box-shadow: 0 0 0 rgba(212,175,55,0.18); }
+      50%  { box-shadow: 0 0 24px rgba(212,175,55,0.38); }
+      100% { box-shadow: 0 0 0 rgba(212,175,55,0.18); }
+    }
+    .price-card.featured.is-visible{
+      animation: premiumGlow 3.5s ease-in-out infinite;
+    }
+
+    /* ---------- JCR League section ---------- */
+    #league{ margin-top: 80px; }
+
+    #league .price-card {
+  opacity: 1;
+  transform: none;
+}
+
+    .league-features{
+      list-style:none;
+      padding:0;
+      margin: 20px 0;
+      text-align:left;
+      opacity: 0.98;
+    }
+    .league-features li{ margin: 10px 0; }
+    .league-note{
+      margin-top: 16px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    /* ---------- Basket Drawer ---------- */
+    .basket-overlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.55);
+      display: none;
+      z-index: 1100;
+    }
+    .basket-drawer{
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      width: min(420px, 92vw);
+      background: var(--panel);
+      border-left: 2px solid rgba(212,175,55,0.35);
       transform: translateX(100%);
       transition: 0.25s;
       z-index: 1200;
-      display: flex; flex-direction: column;
+      display:flex;
+      flex-direction: column;
     }
-    .basket-drawer.open { transform: translateX(0); }
+    .basket-drawer.open{ transform: translateX(0); }
 
-    .basket-header {
+    .basket-header{
       padding: 18px 18px 12px;
-      display: flex; align-items: center; justify-content: space-between;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .icon-btn {
-      background: transparent; border: 1px solid rgba(212,175,55,0.5);
-      color: white; border-radius: 10px; padding: 6px 10px; cursor: pointer;
-    }
-    .basket-items { padding: 14px 18px; flex: 1; overflow: auto; }
-
-    .basket-item {
-      display: flex; justify-content: space-between; gap: 12px;
-      padding: 12px; border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; margin-bottom: 12px; background: rgba(255,255,255,0.04);
-    }
-    .remove-btn {
-      background: transparent; border: 1px solid rgba(255,255,255,0.15);
-      color: white; border-radius: 12px; padding: 6px 10px; cursor: pointer; opacity: 0.9;
+    .icon-btn{
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.5);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 6px 10px;
+      cursor: pointer;
     }
 
-    .basket-footer { padding: 14px 18px 18px; border-top: 1px solid rgba(255,255,255,0.08); }
-    .basket-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .basket-note { opacity: 0.9; margin-bottom: 12px; }
+    .basket-items{
+      padding: 14px 18px;
+      flex: 1;
+      overflow: auto;
+    }
+    .basket-item{
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.04);
+    }
+    .basket-item strong{ display:block; margin-bottom: 6px; }
 
-    .checkout-buttons { display: grid; gap: 10px; }
-    .pay-btn {
-      display: block; text-align: center; padding: 12px 14px; border-radius: 999px;
-      text-decoration: none; font-weight: 700; color: white;
+    .remove-btn{
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      border-radius: 12px;
+      padding: 6px 10px;
+      cursor:pointer;
+      opacity: 0.9;
+      height: fit-content;
+    }
+
+    .basket-footer{
+      padding: 14px 18px 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .basket-total{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      margin-bottom: 10px;
+    }
+    .basket-note{ opacity: 0.9; margin-bottom: 12px; }
+    .checkout-buttons{ display:grid; gap: 10px; }
+
+    .pay-btn{
+      display:block;
+      text-align:center;
+      padding: 12px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight: 700;
+      color: var(--white);
       border: 2px solid rgba(212,175,55,0.35);
+      transition: 0.2s;
     }
-    .pay-btn.stripe { background: linear-gradient(135deg, #b30000, #ff1a1a); }
-    .pay-btn.paypal { background: rgba(255,255,255,0.08); }
-    .basket-small { display: block; margin-top: 10px; opacity: 0.75; }
+    .pay-btn.stripe{ background: linear-gradient(135deg, var(--red1), var(--red2)); }
+    .pay-btn.paypal{ background: rgba(255,255,255,0.08); }
+    .basket-small{ display:block; margin-top: 10px; opacity: 0.75; }
+
+    /* ---------- Stagger reveal (pricing cards) ---------- */
+    .price-card{
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 650ms ease, transform 650ms ease;
+      will-change: opacity, transform;
+    }
+    .price-card.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .price-card.featured.is-visible{
+      transform: translateY(0) scale(1.02);
+    }
+    @media (prefers-reduced-motion: reduce){
+      .price-card, .price-card.is-visible{
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+      }
+      .price-card.featured .badge{ animation: none !important; }
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px){
+      .features{ flex-direction: column; }
+      .pricing-grid{ grid-template-columns: 1fr; }
+      header h1{ font-size: 2.3rem; }
+    }
+
+    footer{ text-align:center; padding: 30px; opacity: 0.7; font-size: 0.9rem; }
   </style>
 </head>
 
@@ -180,8 +403,10 @@
   <nav class="navbar">
     <div class="nav-inner">
       <a class="brand" href="#top">JCR Setups Lab</a>
+
       <div class="nav-links">
         <a href="#pricing">Pricing</a>
+        <a href="#league">JCR League</a>
         <button class="basket-btn" type="button" onclick="toggleBasket(true)">
           Basket <span class="basket-count" id="basketCount">0</span>
         </button>
@@ -209,7 +434,7 @@
   </section>
 
   <section>
-    <h2>What We Offer</h2>
+    <h2>What Do We Offer?</h2>
     <div class="features-wrapper">
       <div class="features">
         <div class="card">
@@ -229,14 +454,15 @@
   </section>
 
   <section id="pricing">
-    <h2>Pricing & Buy</h2>
+    <h2>Pricing & Purchasing</h2>
     <p style="opacity:0.92; margin-bottom: 20px;">
       Pick a plan, add it to your basket, then checkout with your preferred payment method.
     </p>
 
     <div class="features-wrapper">
       <div class="pricing-grid">
-        <div class="price-card">
+
+        <div class="price-card featured">
           <div class="badge">BEST VALUE</div>
           <h3>JCR Premium (Full Access)</h3>
           <div class="price">£14.99</div>
@@ -272,6 +498,7 @@
           </ul>
           <button class="btn small" type="button" onclick="addToBasket('All Strategies', 6.99)">Add to Basket</button>
         </div>
+
       </div>
     </div>
   </section>
@@ -282,6 +509,51 @@
       Whether you're Max Verstappen or Nicholas Latifi, JCR Setups Lab is the place to learn, improve performance, and win.
       We keep the price as low as possible while delivering top-tier value.
     </p>
+  </section>
+
+  <section id="league">
+    <h2>JCR League</h2>
+
+    <p style="opacity:0.92; margin-bottom: 20px;">
+      Our official competitive racing league
+    </p>
+
+    <div class="features-wrapper">
+      <div class="price-card featured">
+        <div class="badge">🏁 JCR LEAGUE</div>
+
+        <h3>🏁 JCR League</h3>
+
+        <p>
+          JCR League is our official competitive racing league, built for drivers who
+          want clean racing, strong competition, and a professional environment.
+        </p>
+
+        <p>
+          The league is closely linked with JCR Setups Lab. Using our premium setups and
+          strategies will improve your performance and consistency on track in JCR and
+          other leagues, while increasing your chances of winning the improved prize pool
+          for Season 2!
+        </p>
+
+        <ul class="league-features">
+          <li>✔️ Clean & competitive racing standards</li>
+          <li>✔️ Organised seasons with full calendars</li>
+          <li>✔️ Stewarding & race graphics</li>
+          <li>✔️ Active community & events</li>
+          <li>✔️✍️ A Prize Pool for the winners in each Tier!🇦</li>
+        </ul>
+
+        <p class="league-note">
+          Whether you’re new to league racing or an experienced competitor,
+          JCR League offers a place to race, improve, and compete at a high level.
+        </p>
+
+        <a href="https://linktr.ee/jcrleague" target="_blank" rel="noopener noreferrer" class="btn small">
+          Join the League
+        </a>
+      </div>
+    </div>
   </section>
 
   <footer>
@@ -322,153 +594,143 @@
     </div>
   </aside>
 
- <script>
-  // ====== EDIT THESE 3 STRIPE LINKS ======
-  const PRODUCTS = {
-    "JCR Premium": {
-      price: 14.99,
-      stripe: "https://buy.stripe.com/5kQ4gy9aIbzXcv64t86kg01"
-    },
-    "All Setups": {
-      price: 12.99,
-      stripe: "https://buy.stripe.com/4gM6oG0EcbzX9iUbVA6kg02"
-    },
-    "All Strategies": {
-      price: 6.99,
-      stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03"
-    }
-  };
+  <script>
+    // ------- Stagger reveal for pricing cards -------
+    document.addEventListener("DOMContentLoaded", () => {
+      const pricingSection = document.querySelector("#pricing");
+      const cards = document.querySelectorAll("#pricing .price-card");
+      if (!pricingSection || !cards.length) return;
 
-  // Your PayPal.me username
-  const PAYPAL_USERNAME = "jackmaltbysmith";
-  const CURRENCY_CODE = "GBP";
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
 
-  // Basket will contain ONE item max (membership style)
-  const basket = [];
+          cards.forEach((card, i) => {
+            card.style.transitionDelay = `${i * 140}ms`;
+            card.classList.add("is-visible");
+          });
 
-  function money(n) {
-    return "£" + n.toFixed(2);
-  }
+          observer.disconnect();
+        });
+      }, { threshold: 0.2 });
 
-  function paypalLinkForAmount(amount) {
-    return `https://paypal.me/${encodeURIComponent(PAYPAL_USERNAME)}/${amount.toFixed(2)}?currencyCode=${encodeURIComponent(CURRENCY_CODE)}`;
-  }
-
-  function setCheckoutState({ disabled, stripeHref = "#", paypalHref = "#", stripeText }) {
-    const stripeBtn = document.getElementById("stripeCheckoutBtn");
-    const paypalBtn = document.getElementById("paypalCheckoutBtn");
-
-    if (stripeBtn) {
-      stripeBtn.href = stripeHref;
-      stripeBtn.style.pointerEvents = disabled ? "none" : "auto";
-      stripeBtn.style.opacity = disabled ? "0.55" : "1";
-      stripeBtn.textContent = stripeText || "Pay with Card / Apple Pay (Stripe)";
-    }
-
-    if (paypalBtn) {
-      paypalBtn.href = paypalHref;
-      paypalBtn.style.pointerEvents = disabled ? "none" : "auto";
-      paypalBtn.style.opacity = disabled ? "0.55" : "1";
-      paypalBtn.textContent = "Pay with PayPal";
-    }
-  }
-
-  function updateCheckoutLinks() {
-    if (basket.length === 0) {
-      setCheckoutState({
-        disabled: true,
-        stripeText: "Add a product to checkout"
-      });
-      return;
-    }
-
-    const item = basket[0];
-    const product = PRODUCTS[item.name];
-
-    if (!product || !product.stripe) {
-      setCheckoutState({
-        disabled: true,
-        stripeText: "Checkout not configured"
-      });
-      return;
-    }
-
-    setCheckoutState({
-      disabled: false,
-      stripeHref: product.stripe,
-      paypalHref: paypalLinkForAmount(item.price),
-      stripeText: "Pay with Card / Apple Pay (Stripe)"
+      observer.observe(pricingSection);
     });
-  }
 
-  function updateBasketUI() {
-    const basketCountEl = document.getElementById("basketCount");
-    const basketItemsEl = document.getElementById("basketItems");
-    const basketTotalEl = document.getElementById("basketTotal");
+    // ------- Basket / checkout logic -------
+    const PRODUCTS = {
+      "JCR Premium (Full Access)": { price: 14.99, stripe: "https://buy.stripe.com/5kQ4gy9aIbzXcv64t86kg01" },
+      "All Setups": { price: 12.99, stripe: "https://buy.stripe.com/4gM6oG0EcbzX9iUbVA6kg02" },
+      "All Strategies": { price:  6.99, stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03" }
+    };
 
-    if (basketCountEl) basketCountEl.textContent = basket.length;
+    const PAYPAL_USERNAME = "jackmaltbysmith";
+    const CURRENCY_CODE = "GBP";
+    const basket = []; // one item max
 
-    let total = 0;
-    if (basketItemsEl) basketItemsEl.innerHTML = "";
+    function money(n){ return "£" + n.toFixed(2); }
 
-    if (basket.length === 0) {
-      if (basketItemsEl) basketItemsEl.innerHTML = `<p style="opacity:0.85;">Your basket is empty.</p>`;
-    } else {
-      basket.forEach((item, idx) => {
-        total += item.price;
+    function paypalLinkForAmount(amount){
+      return `https://paypal.me/${encodeURIComponent(PAYPAL_USERNAME)}/${amount.toFixed(2)}?currencyCode=${encodeURIComponent(CURRENCY_CODE)}`;
+    }
 
-        const div = document.createElement("div");
-        div.className = "basket-item";
-        div.innerHTML = `
-          <div>
-            <strong>${item.name}</strong>
-            <span style="opacity:0.9;">${money(item.price)}</span>
-          </div>
-          <button class="remove-btn" type="button" onclick="removeFromBasket(${idx})">Remove</button>
-        `;
-        basketItemsEl.appendChild(div);
+    function setCheckoutState({ disabled, stripeHref="#", paypalHref="#", stripeText }){
+      const stripeBtn = document.getElementById("stripeCheckoutBtn");
+      const paypalBtn = document.getElementById("paypalCheckoutBtn");
+
+      if (stripeBtn){
+        stripeBtn.href = stripeHref;
+        stripeBtn.style.pointerEvents = disabled ? "none" : "auto";
+        stripeBtn.style.opacity = disabled ? "0.55" : "1";
+        stripeBtn.textContent = stripeText || "Pay with Card / Apple Pay (Stripe)";
+      }
+      if (paypalBtn){
+        paypalBtn.href = paypalHref;
+        paypalBtn.style.pointerEvents = disabled ? "none" : "auto";
+        paypalBtn.style.opacity = disabled ? "0.55" : "1";
+      }
+    }
+
+    function updateCheckoutLinks(){
+      if (basket.length === 0){
+        setCheckoutState({ disabled: true, stripeText: "Add a product to checkout" });
+        return;
+      }
+      const item = basket[0];
+      const product = PRODUCTS[item.name];
+      if (!product || !product.stripe){
+        setCheckoutState({ disabled: true, stripeText: "Checkout not configured" });
+        return;
+      }
+      setCheckoutState({
+        disabled: false,
+        stripeHref: product.stripe,
+        paypalHref: paypalLinkForAmount(item.price),
+        stripeText: "Pay with Card / Apple Pay (Stripe)"
       });
     }
 
-    if (basketTotalEl) basketTotalEl.textContent = money(total);
+    function updateBasketUI(){
+      const basketCountEl = document.getElementById("basketCount");
+      const basketItemsEl = document.getElementById("basketItems");
+      const basketTotalEl = document.getElementById("basketTotal");
 
-    updateCheckoutLinks();
-  }
+      if (basketCountEl) basketCountEl.textContent = basket.length;
 
-  // ONE-ITEM cart: adding a product replaces the current one
-  function addToBasket(name, price) {
-    if (PRODUCTS[name]) price = PRODUCTS[name].price; // keep prices consistent
+      let total = 0;
+      if (basketItemsEl) basketItemsEl.innerHTML = "";
 
-    basket.length = 0;
-    basket.push({ name, price });
+      if (basket.length === 0){
+        if (basketItemsEl) basketItemsEl.innerHTML = `<p style="opacity:0.85;">Your basket is empty.</p>`;
+      } else {
+        basket.forEach((item, idx) => {
+          total += item.price;
+          const div = document.createElement("div");
+          div.className = "basket-item";
+          div.innerHTML = `
+            <div>
+              <strong>${item.name}</strong>
+              <span style="opacity:0.9;">${money(item.price)}</span>
+            </div>
+            <button class="remove-btn" type="button" onclick="removeFromBasket(${idx})">Remove</button>
+          `;
+          basketItemsEl.appendChild(div);
+        });
+      }
 
-    updateBasketUI();
-    toggleBasket(true);
-  }
-
-  function removeFromBasket(index) {
-    basket.splice(index, 1);
-    updateBasketUI();
-  }
-
-  function toggleBasket(open) {
-    const drawer = document.getElementById("basketDrawer");
-    const overlay = document.getElementById("basketOverlay");
-    if (!drawer || !overlay) return;
-
-    if (open) {
-      drawer.classList.add("open");
-      drawer.setAttribute("aria-hidden", "false");
-      overlay.style.display = "block";
-    } else {
-      drawer.classList.remove("open");
-      drawer.setAttribute("aria-hidden", "true");
-      overlay.style.display = "none";
+      if (basketTotalEl) basketTotalEl.textContent = money(total);
+      updateCheckoutLinks();
     }
-  }
 
-  // Init
-  updateBasketUI();
-</script>
+    function addToBasket(name, price){
+      if (PRODUCTS[name]) price = PRODUCTS[name].price;
+      basket.length = 0; // one item max (membership style)
+      basket.push({ name, price });
+      updateBasketUI();
+      toggleBasket(true);
+    }
+
+    function removeFromBasket(index){
+      basket.splice(index, 1);
+      updateBasketUI();
+    }
+
+    function toggleBasket(open){
+      const drawer = document.getElementById("basketDrawer");
+      const overlay = document.getElementById("basketOverlay");
+      if (!drawer || !overlay) return;
+
+      if (open){
+        drawer.classList.add("open");
+        overlay.style.display = "block";
+      } else {
+        drawer.classList.remove("open");
+        overlay.style.display = "none";
+      }
+    }
+
+    // init
+    updateBasketUI();
+  </script>
 </body>
 </html>
