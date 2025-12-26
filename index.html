@@ -5,540 +5,282 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JCR Setups Lab</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
-      }
+    body { background-color: #000435; color: white; min-height: 100vh; }
 
-    body {
-      background-color: #000435;
-      color: white;
-      min-height: 100vh;
-    }
+    header { text-align: center; padding: 80px 20px; }
+    header h1 { font-size: 3rem; font-weight: 600; }
+    header p { margin-top: 15px; font-size: 1.2rem; opacity: 0.9; }
 
-    header {
-      text-align: center;
-      padding: 80px 20px;
-      id="top"
-    }
-
-    header h1 {
-      font-size: 3rem;
-      font-weight: 600;
-    }
-
-    header p {
-      margin-top: 15px;
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-
-    .logo {
-  width: 280px;
-  margin-bottom: 20px;
-  border: 2px solid #d4af37;
-}
-
-.tagline {
-  color: #d4af37;
-  font-size: 1.3rem;
-  margin-top: 10px;
-}
+    .logo { width: 280px; margin-bottom: 20px; border: 2px solid #d4af37; }
+    .tagline { color: #d4af37; font-size: 1.3rem; margin-top: 10px; }
 
     .btn {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 14px 36px;
-  background: linear-gradient(135deg, #b30000, #ff1a1a);
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: 600;
-  transition: 0.3s;
-}
-    .btn:hover {
-      background: linear-gradient(135deg, #ff1a1a, #ff4d4d);
-      transform: scale(1.05);
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 36px;
+      background: linear-gradient(135deg, #b30000, #ff1a1a);
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { background: linear-gradient(135deg, #ff1a1a, #ff4d4d); transform: scale(1.05); }
+
+    section { margin: 60px auto; padding: 0 20px; text-align: center; line-height: 1.7; max-width: 900px; }
+    section h2 { font-size: 2.2rem; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
+
+    .features-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    .features {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      margin-top: 50px;
+      justify-content: space-between;
+      align-items: stretch;
     }
 
-   section {
-  margin: 60px auto;
-  padding: 0 20px;
-  text-align: center;
-  line-height: 1.7;
-  max-width: 800px;
-}
-
-    section h2 {
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-.features {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  margin-top: 50px;
-  justify-content: space-between;
-  align-items: stretch;
-}
-
-.card {
-  background: linear-gradient(135deg, #b30000, #ff1a1a);
-  border: 3px solid #d4af37;
-  border-radius: 18px;
-  padding: 30px;
-  flex: 1;
-  text-align: center;
-  transition: 0.3s;
-}
-.card h3 {
-  margin-bottom: 10px;
-  font-size: 1.2rem;
-}
-
-.card p {
-  opacity: 0.95;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-}
-
-    footer {
-      text-align: center;
+    .card {
+      background: linear-gradient(135deg, #b30000, #ff1a1a);
+      border: 3px solid #d4af37;
+      border-radius: 18px;
       padding: 30px;
-      opacity: 0.7;
-      font-size: 0.9rem;
+      flex: 1;
+      text-align: center;
+      transition: 0.3s;
     }
-    
-.features-wrapper {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-@media (max-width: 900px) {
-  .features {
-    flex-direction: column;
-  }
-}
-/* Navbar */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background: rgba(0, 4, 53, 0.85);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-}
+    .card h3 { margin-bottom: 10px; font-size: 1.2rem; }
+    .card p { opacity: 0.95; }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5); }
 
-.nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 14px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+    footer { text-align: center; padding: 30px; opacity: 0.7; font-size: 0.9rem; }
 
-.brand {
-  color: #d4af37;
-  text-decoration: none;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
+    @media (max-width: 900px) { .features { flex-direction: column; } }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+    /* Navbar */
+    .navbar {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(0, 4, 53, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { color: #d4af37; text-decoration: none; font-weight: 600; letter-spacing: 0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-links a { color: white; text-decoration: none; opacity: 0.9; }
+    .nav-links a:hover { opacity: 1; }
 
-.nav-links a {
-  color: white;
-  text-decoration: none;
-  opacity: 0.9;
-}
+    .basket-btn {
+      background: transparent; border: 2px solid #d4af37; color: white;
+      padding: 8px 14px; border-radius: 999px; cursor: pointer; font-weight: 600;
+    }
+    .basket-count {
+      display: inline-block; margin-left: 8px; background: #d4af37; color: #000435;
+      padding: 2px 8px; border-radius: 999px; font-size: 0.9rem;
+    }
 
-.nav-links a:hover {
-  opacity: 1;
-}
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 18px;
+      text-align: left;
+    }
 
-.basket-btn {
-  background: transparent;
-  border: 2px solid #d4af37;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
-}
+    .price-card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 2px solid rgba(212, 175, 55, 0.35);
+      border-radius: 18px;
+      padding: 26px;
+      position: relative;
+      transition: 0.3s;
+    }
+    .price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45); }
 
-.basket-count {
-  display: inline-block;
-  margin-left: 8px;
-  background: #d4af37;
-  color: #000435;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-}
+    .badge {
+      position: absolute; top: 14px; right: 14px;
+      background: #d4af37; color: #000435;
+      font-weight: 700; font-size: 0.75rem; padding: 6px 10px; border-radius: 999px;
+    }
 
-/* Pricing */
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
-  margin-top: 18px;
-}
+    .price { font-size: 2.2rem; font-weight: 700; margin: 10px 0 14px; color: white; }
+    .price-card ul { list-style: none; padding-left: 0; margin: 0 0 18px; opacity: 0.95; }
+    .price-card li { margin: 10px 0; }
 
-.price-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 2px solid rgba(212, 175, 55, 0.35);
-  border-radius: 18px;
-  padding: 26px;
-  text-align: left;
-  position: relative;
-  transition: 0.3s;
-}
+    .btn.small { padding: 12px 20px; margin-top: 10px; }
 
-.price-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
-}
+    @media (max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } }
 
-.price-card.featured {
-  border-color: #d4af37;
-  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
-}
+    /* Basket drawer */
+    .basket-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+      display: none; z-index: 1100;
+    }
+    .basket-drawer {
+      position: fixed; top: 0; right: 0;
+      height: 100vh; width: min(420px, 92vw);
+      background: #070a3d;
+      border-left: 2px solid rgba(212, 175, 55, 0.35);
+      transform: translateX(100%);
+      transition: 0.25s;
+      z-index: 1200;
+      display: flex; flex-direction: column;
+    }
+    .basket-drawer.open { transform: translateX(0); }
 
-.badge {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  background: #d4af37;
-  color: #000435;
-  font-weight: 700;
-  font-size: 0.75rem;
-  padding: 6px 10px;
-  border-radius: 999px;
-}
+    .basket-header {
+      padding: 18px 18px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .icon-btn {
+      background: transparent; border: 1px solid rgba(212,175,55,0.5);
+      color: white; border-radius: 10px; padding: 6px 10px; cursor: pointer;
+    }
+    .basket-items { padding: 14px 18px; flex: 1; overflow: auto; }
 
-.price {
-  font-size: 2.2rem;
-  font-weight: 700;
-  margin: 10px 0 14px;
-  color: white;
-}
+    .basket-item {
+      display: flex; justify-content: space-between; gap: 12px;
+      padding: 12px; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; margin-bottom: 12px; background: rgba(255,255,255,0.04);
+    }
+    .remove-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: white; border-radius: 12px; padding: 6px 10px; cursor: pointer; opacity: 0.9;
+    }
 
-.price span {
-  font-size: 1rem;
-  opacity: 0.85;
-  margin-left: 6px;
-}
+    .basket-footer { padding: 14px 18px 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .basket-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .basket-note { opacity: 0.9; margin-bottom: 12px; }
 
-.price-card ul {
-  list-style: none;
-  padding-left: 0;
-  margin: 0 0 18px;
-  opacity: 0.95;
-}
-
-.price-card li {
-  margin: 10px 0;
-}
-
-.btn.small {
-  padding: 12px 20px;
-  border: none;
-  cursor: pointer;
-}
-
-/* Basket drawer */
-.basket-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: none;
-  z-index: 1100;
-}
-
-.basket-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: min(420px, 92vw);
-  background: #070a3d;
-  border-left: 2px solid rgba(212, 175, 55, 0.35);
-  transform: translateX(100%);
-  transition: 0.25s;
-  z-index: 1200;
-  display: flex;
-  flex-direction: column;
-}
-
-.basket-drawer.open {
-  transform: translateX(0);
-}
-
-.basket-header {
-  padding: 18px 18px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-
-.icon-btn {
-  background: transparent;
-  border: 1px solid rgba(212,175,55,0.5);
-  color: white;
-  border-radius: 10px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
-
-.basket-items {
-  padding: 14px 18px;
-  flex: 1;
-  overflow: auto;
-}
-
-.basket-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  margin-bottom: 12px;
-  background: rgba(255,255,255,0.04);
-}
-
-.basket-item strong {
-  display: block;
-  margin-bottom: 6px;
-}
-
-.remove-btn {
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.15);
-  color: white;
-  border-radius: 12px;
-  padding: 6px 10px;
-  cursor: pointer;
-  opacity: 0.9;
-}
-
-.basket-footer {
-  padding: 14px 18px 18px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.basket-total {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.basket-note {
-  opacity: 0.9;
-  margin-bottom: 12px;
-}
-
-.checkout-buttons {
-  display: grid;
-  gap: 10px;
-}
-
-.pay-btn {
-  display: block;
-  text-align: center;
-  padding: 12px 14px;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 700;
-  color: white;
-  border: 2px solid rgba(212,175,55,0.35);
-}
-
-.pay-btn.stripe {
-  background: linear-gradient(135deg, #b30000, #ff1a1a);
-}
-
-.pay-btn.paypal {
-  background: rgba(255,255,255,0.08);
-}
-
-.basket-small {
-  display: block;
-  margin-top: 10px;
-  opacity: 0.75;
-}
-
-@media (max-width: 900px) {
-  .pricing-grid {
-    grid-template-columns: 1fr;
-  }
-}
-<!-- Basket Drawer -->
-<div class="basket-overlay" id="basketOverlay" onclick="toggleBasket(false)"></div>
-
-<aside class="basket-drawer" id="basketDrawer" aria-hidden="true">
-  <div class="basket-header">
-    <h3>Your Basket</h3>
-    <button class="icon-btn" onclick="toggleBasket(false)" aria-label="Close basket">✕</button>
-  </div>
-
-  <div class="basket-items" id="basketItems"></div>
-
-  <div class="basket-footer">
-    <div class="basket-total">
-      <span>Total</span>
-      <strong id="basketTotal">£0.00</strong>
-    </div>
-
-    <p class="basket-note">
-      Choose a checkout method below (set your real links in the code).
-    </p>
-
-    <div class="checkout-buttons">
-      <a class="pay-btn stripe" id="stripeCheckoutBtn" href="#" target="_blank" rel="noopener noreferrer">
-        Pay with Card / Apple Pay (Stripe)
-      </a>
-      <a class="pay-btn paypal" id="paypalCheckoutBtn" href="#" target="_blank" rel="noopener noreferrer">
-        Pay with PayPal
-      </a>
-    </div>
-
-    <small class="basket-small">
-      Apple Pay/Google Pay appear automatically in Stripe Checkout when enabled and supported.
-    </small>
-  </div>
-</aside>
+    .checkout-buttons { display: grid; gap: 10px; }
+    .pay-btn {
+      display: block; text-align: center; padding: 12px 14px; border-radius: 999px;
+      text-decoration: none; font-weight: 700; color: white;
+      border: 2px solid rgba(212,175,55,0.35);
+    }
+    .pay-btn.stripe { background: linear-gradient(135deg, #b30000, #ff1a1a); }
+    .pay-btn.paypal { background: rgba(255,255,255,0.08); }
+    .basket-small { display: block; margin-top: 10px; opacity: 0.75; }
   </style>
 </head>
+
 <body>
   <nav class="navbar">
-  <div class="nav-inner">
-    <a class="brand" href="#top">JCR Setups Lab</a>
-
-    <div class="nav-links">
-      <a href="#pricing">Pricing</a>
-      <button class="basket-btn" type="button" onclick="toggleBasket(true)">
-        Basket <span class="basket-count" id="basketCount">0</span>
-      </button>
+    <div class="nav-inner">
+      <a class="brand" href="#top">JCR Setups Lab</a>
+      <div class="nav-links">
+        <a href="#pricing">Pricing</a>
+        <button class="basket-btn" type="button" onclick="toggleBasket(true)">
+          Basket <span class="basket-count" id="basketCount">0</span>
+        </button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<header>
-  <img src="images/logo.png" alt="JCR Setup Lab Logo" class="logo">
-
-  <h1>JCR Setups Lab</h1>
-
-  <p class="tagline">Precision. Performance. Perfection.</p>
-
-  <a href="https://discord.gg/Er2efYPu" class="btn">Join the Discord</a>
-</header>
-
-   <section>
-  <p>
-    Welcome to JCR Setups Lab — the home of precision engineering for F1 25.
-    Purchase 6 months to gain full access to pro-tested setups and strategies
-    designed to give you the edge.
-    <br><br>
-    Setups are updated frequently to maximise pace. Premium members receive
-    access to 1-to-1 support tickets to fine-tune setups to their driving style.
-    <br><br>
-    Engineered in the lab. Proven on the track.
-  </p>
-</section>
+  <header id="top">
+    <img src="images/logo.png" alt="JCR Setup Lab Logo" class="logo">
+    <h1>JCR Setups Lab</h1>
+    <p class="tagline">Precision. Performance. Perfection.</p>
+    <a href="https://discord.gg/Er2efYPu" class="btn" target="_blank" rel="noopener noreferrer">Join the Discord</a>
+  </header>
 
   <section>
-  <h2>What We Offer</h2>
+    <p>
+      Welcome to JCR Setups Lab — the home of precision engineering for F1 25.
+      Purchase to gain full access to pro-tested setups and strategies designed to give you the edge.
+      <br><br>
+      Setups are updated frequently to maximise pace. Premium members receive access to 1-to-1 support tickets
+      to fine-tune setups to their driving style.
+      <br><br>
+      Engineered in the lab. Proven on the track.
+    </p>
+  </section>
 
-  <div class="features-wrapper">
-    <div class="features">
-      <div class="card">
-        <h3>🔥 Setups + Strategies for every track!</h3>
-        <p>Proven and perfected F1 25 setups and strategies created and used by esports-experienced drivers.</p>
-      </div>
-
-      <div class="card">
-        <h3>💬 Top-quality support</h3>
-        <p>Support from staff to help adjust setups and strategies to your driving style and boost confidence.</p>
-      </div>
-
-      <div class="card">
-        <h3>🛠️ Precise details</h3>
-        <p>Battery usage, tyre wear, fuel info, and race strategy guidance to maximise race pace.</p>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="pricing">
-  <h2>Pricing & Buy</h2>
-  <p style="opacity:0.92; margin-bottom: 20px;">
-    Pick a plan, add it to your basket, then checkout with your preferred payment method.
-  </p>
-
-  <div class="features-wrapper">
-    <div class="pricing-grid">
-      <div class="price-card">
-        <h3>JCR Premium (Full Access)</h3>
-         <div class="badge">BEST VALUE</div>
-        <div class="price">Only £14.99</div>
-        <ul>
-          <li>Quali and race, esports-tested setups for every track until F126</li>
-          <li>All strategies (includes battery,fuel and tyre info)</li>
-          <li>Frequent updates</li>
-          <li>Premium support tickets</li>
-        </ul>
-        <button class="btn small" onclick="addToBasket('JCR Premium', 14.99)">Add to Basket</button>
-      </div>
-
-      <div class="price-card featured">
-        <div class="badge">SETUPS ONLY</div>
-        <h3>All setups</h3>
-        <div class="price">£12.99</div>
-        <ul>
-          <li>Quali and race, esports-tested setups for every track until F126</li>
-          <li>Frequent updates</li>
-          <li>1-to-1 setup tuning tickets</li>
-        </ul>
-        <button class="btn small" onclick="addToBasket('All setups', 12.99)">Add to Basket</button>
-      </div>
-
-      <div class="price-card">
-        <h3> All strategies</h3>
-        <div class="price">£6.99</div>
-        <ul>
-          <li>All track srategies until F126</li>
-          <li>Regular updates</li>
-          <li>Priority support tickets</li>
-          <li>Tyre, battery + fuel info for every track</li>
-
-        </ul>
-        <button class="btn small" onclick="addToBasket('All strategies', 6.99)">Add to Basket</button>
+  <section>
+    <h2>What We Offer</h2>
+    <div class="features-wrapper">
+      <div class="features">
+        <div class="card">
+          <h3>🔥 Setups + Strategies for every track!</h3>
+          <p>Proven and perfected F1 25 setups and strategies created and used by esports-experienced drivers.</p>
+        </div>
+        <div class="card">
+          <h3>💬 Top-quality support</h3>
+          <p>Support from staff to help adjust setups and strategies to your driving style and boost confidence.</p>
+        </div>
+        <div class="card">
+          <h3>🛠️ Precise details</h3>
+          <p>Battery usage, tyre wear, fuel info, and race strategy guidance to maximise race pace.</p>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+  <section id="pricing">
+    <h2>Pricing & Buy</h2>
+    <p style="opacity:0.92; margin-bottom: 20px;">
+      Pick a plan, add it to your basket, then checkout with your preferred payment method.
+    </p>
+
+    <div class="features-wrapper">
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="badge">BEST VALUE</div>
+          <h3>JCR Premium (Full Access)</h3>
+          <div class="price">£14.99</div>
+          <ul>
+            <li>Quali + race esports-tested setups for every track until F1 26</li>
+            <li>All strategies (battery, fuel, tyre info)</li>
+            <li>Frequent updates</li>
+            <li>Premium support tickets</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('JCR Premium', 14.99)">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">SETUPS ONLY</div>
+          <h3>All Setups</h3>
+          <div class="price">£12.99</div>
+          <ul>
+            <li>Quali + race setups for every track until F1 26</li>
+            <li>Frequent updates</li>
+            <li>Setup tuning tickets</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('All Setups', 12.99)">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">STRATEGIES</div>
+          <h3>All Strategies</h3>
+          <div class="price">£6.99</div>
+          <ul>
+            <li>All track strategies until F1 26</li>
+            <li>Regular updates</li>
+            <li>Tyre, battery + fuel info for every track</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('All Strategies', 6.99)">Add to Basket</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section>
     <h2>Why Join JCR Setups Lab?</h2>
     <p>
-      Whether you're Max Verstappen or Nicholas Latifi, JCR Setups Lab is the place 
-      to learn, improve performance, and win. All of this and we keep the price down as low as possible, one of the cheapest, yet best offers around.
+      Whether you're Max Verstappen or Nicholas Latifi, JCR Setups Lab is the place to learn, improve performance, and win.
+      We keep the price as low as possible while delivering top-tier value.
     </p>
   </section>
 
@@ -546,5 +288,119 @@
     © 2025 JCR Setups Lab | Not affiliated with or endorsed by EA Sports or Codemasters
   </footer>
 
+  <!-- Basket Drawer -->
+  <div class="basket-overlay" id="basketOverlay" onclick="toggleBasket(false)"></div>
+
+  <aside class="basket-drawer" id="basketDrawer" aria-hidden="true">
+    <div class="basket-header">
+      <h3>Your Basket</h3>
+      <button class="icon-btn" type="button" onclick="toggleBasket(false)" aria-label="Close basket">✕</button>
+    </div>
+
+    <div class="basket-items" id="basketItems"></div>
+
+    <div class="basket-footer">
+      <div class="basket-total">
+        <span>Total</span>
+        <strong id="basketTotal">£0.00</strong>
+      </div>
+
+      <p class="basket-note">Choose a checkout method below.</p>
+
+      <div class="checkout-buttons">
+        <a class="pay-btn stripe" id="stripeCheckoutBtn" href="#" target="_blank" rel="noopener noreferrer">
+          Pay with Card / Apple Pay (Stripe)
+        </a>
+        <a class="pay-btn paypal" id="paypalCheckoutBtn" href="#" target="_blank" rel="noopener noreferrer">
+          Pay with PayPal
+        </a>
+      </div>
+
+      <small class="basket-small">
+        Apple Pay/Google Pay appear automatically in Stripe Checkout when enabled and supported.
+      </small>
+    </div>
+  </aside>
+
+  <script>
+    // Put your real links here
+    const CHECKOUT_LINKS = {
+      stripe: "https://buy.stripe.com/test_4gMeVc8ao0Xv9DIgpdenS00",
+      paypal: "https://paypal.me/jackmaltbysmith"
+    };
+
+    const basket = [];
+
+    function money(n) {
+      return "£" + n.toFixed(2);
+    }
+
+    function updateBasketUI() {
+      const basketCountEl = document.getElementById("basketCount");
+      const basketItemsEl = document.getElementById("basketItems");
+      const basketTotalEl = document.getElementById("basketTotal");
+
+      if (basketCountEl) basketCountEl.textContent = basket.length;
+
+      let total = 0;
+      if (basketItemsEl) basketItemsEl.innerHTML = "";
+
+      if (basket.length === 0) {
+        if (basketItemsEl) basketItemsEl.innerHTML = `<p style="opacity:0.85;">Your basket is empty.</p>`;
+      } else {
+        basket.forEach((item, idx) => {
+          total += item.price;
+
+          const div = document.createElement("div");
+          div.className = "basket-item";
+          div.innerHTML = `
+            <div>
+              <strong>${item.name}</strong>
+              <span style="opacity:0.9;">${money(item.price)}</span>
+            </div>
+            <button class="remove-btn" type="button" onclick="removeFromBasket(${idx})">Remove</button>
+          `;
+          basketItemsEl.appendChild(div);
+        });
+      }
+
+      if (basketTotalEl) basketTotalEl.textContent = money(total);
+
+      const stripeBtn = document.getElementById("stripeCheckoutBtn");
+      const paypalBtn = document.getElementById("paypalCheckoutBtn");
+      if (stripeBtn) stripeBtn.href = CHECKOUT_LINKS.stripe;
+      if (paypalBtn) paypalBtn.href = CHECKOUT_LINKS.paypal;
+    }
+
+    function addToBasket(name, price) {
+      basket.push({ name, price });
+      updateBasketUI();
+      toggleBasket(true);
+    }
+
+    function removeFromBasket(index) {
+      basket.splice(index, 1);
+      updateBasketUI();
+    }
+
+    function toggleBasket(open) {
+      const drawer = document.getElementById("basketDrawer");
+      const overlay = document.getElementById("basketOverlay");
+
+      if (!drawer || !overlay) return;
+
+      if (open) {
+        drawer.classList.add("open");
+        drawer.setAttribute("aria-hidden", "false");
+        overlay.style.display = "block";
+      } else {
+        drawer.classList.remove("open");
+        drawer.setAttribute("aria-hidden", "true");
+        overlay.style.display = "none";
+      }
+    }
+
+    updateBasketUI();
+  </script>
 </body>
 </html>
