@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JCR Setups Lab</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #0e0e10;
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #5865F2, #404eed);
+      text-align: center;
+      padding: 90px 20px;
+    }
+
+    header h1 {
+      font-size: 3.2rem;
+      font-weight: 600;
+    }
+
+    header p {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 36px;
+      background: #0e0e10;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1e1f22;
+      transform: scale(1.05);
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 70px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    section h2 {
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #1e1f22;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 25px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 10px;
+      color: #5865F2;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 16px;
+      transition: 0.3s;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.04);
+    }
+
+    footer {
+      background: #1e1f22;
+      text-align: center;
+      padding: 30px;
+      opacity: 0.8;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>JCR Setups Lab</h1>
+    <p>A Discord community for clean setups, tech inspiration & creativity</p>
+    <a href="https://discord.gg/kqqpZJ6e53" class="btn">Join the Discord</a>
+  </header>
+
+  <section>
+    <h2>What We Offer</h2>
+
+    <div class="features">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7" alt="Gaming Setup">
+        <div class="card-content">
+          <h3>🔥 Setup Showcases</h3>
+          <p>Show off your gaming or workspace setup and get featured.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1527430253228-e93688616381" alt="Desk Setup">
+        <div class="card-content">
+          <h3>🛠️ Setup Advice</h3>
+          <p>Get feedback, upgrades ideas, and gear recommendations.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Community">
+        <div class="card-content">
+          <h3>💬 Active Community</h3>
+          <p>Connect with people who love clean aesthetics and tech.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Featured Setups</h2>
+
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1616627982014-86f68b3d8d78" alt="Setup 1">
+      <img src="https://images.unsplash.com/photo-1593642634367-d91a135587b5" alt="Setup 2">
+      <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef" alt="Setup 3">
+    </div>
+  </section>
+
+  <footer>
+    © 2025 JCR Setups Lab • Not affiliated with Discord
+  </footer>
+
+</body>
+</html>
