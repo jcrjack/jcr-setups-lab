@@ -656,9 +656,7 @@
         </div>
       </div>
 
-      <p style="opacity:0.8; margin-top: 14px;">
-        
-      </p>
+      <p style="opacity:0.8; margin-top: 14px;"></p>
     </div>
   </section>
 
@@ -809,30 +807,44 @@
   </aside>
 
   <script>
-    // ------- Stagger reveal for pricing cards -------
+    // ------- Stagger reveal for pricing cards (Safari fallback so Pricing always loads) -------
     document.addEventListener("DOMContentLoaded", () => {
       const pricingSection = document.querySelector("#pricing");
       const cards = document.querySelectorAll("#pricing .price-card");
       if (!pricingSection || !cards.length) return;
 
+      const reveal = () => {
+        cards.forEach((card, i) => {
+          card.style.transitionDelay = `${i * 140}ms`;
+          card.classList.add("is-visible");
+        });
+      };
+
+      // Fallback for older iOS Safari (no IntersectionObserver)
+      if (!("IntersectionObserver" in window)) {
+        reveal();
+        return;
+      }
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-
-          cards.forEach((card, i) => {
-            card.style.transitionDelay = `${i * 140}ms`;
-            card.classList.add("is-visible");
-          });
-
+          reveal();
           observer.disconnect();
         });
       }, { threshold: 0.2 });
 
       observer.observe(pricingSection);
+
+      // Extra safety: if page loads mid-scroll / Safari glitches, reveal anyway
+      setTimeout(() => {
+        const rect = pricingSection.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inView) reveal();
+      }, 300);
     });
 
     // ------- Basket / checkout logic (PRODUCT IDS so it never breaks) -------
-    // IMPORTANT: Add your Stripe Checkout links for the new items where it says TODO STRIPE.
     const PRODUCTS = {
       premium: {
         name: "JCR Premium (Full Access)",
@@ -851,13 +863,13 @@
       },
 
       // ---- NEW: Setup bundles ----
-      setup1:  { name: "1 Setup",  price: 1.50, stripe: "https://buy.stripe.com/14A00ibiQavT66I9Ns6kg04" },
-      setup5:  { name: "5 Setups", price: 4.99, stripe: "https://buy.stripe.com/4gM5kC1Ig6fD0Mo9Ns6kg05" },
+      setup1:  { name: "1 Setup",   price: 1.50, stripe: "https://buy.stripe.com/14A00ibiQavT66I9Ns6kg04" },
+      setup5:  { name: "5 Setups",  price: 4.99, stripe: "https://buy.stripe.com/4gM5kC1Ig6fD0Mo9Ns6kg05" },
       setup10: { name: "10 Setups", price: 7.99, stripe: "https://buy.stripe.com/14AaEW0EcavT0Mo0cS6kg06" },
 
       // ---- NEW: Strategy bundles ----
-      strat1:  { name: "1 Strategy",  price: 1.00, stripe: "https://buy.stripe.com/28E5kC2MkcE1gLmgbQ6kg07" },
-      strat5:  { name: "5 Strategies", price: 2.99, stripe: "https://buy.stripe.com/00w5kCaeM1ZnfHi7Fk6kg08" },
+      strat1:  { name: "1 Strategy",    price: 1.00, stripe: "https://buy.stripe.com/28E5kC2MkcE1gLmgbQ6kg07" },
+      strat5:  { name: "5 Strategies",  price: 2.99, stripe: "https://buy.stripe.com/00w5kCaeM1ZnfHi7Fk6kg08" },
       strat10: { name: "10 Strategies", price: 4.99, stripe: "https://buy.stripe.com/14A4gy72A0Vj66I9Ns6kg09" }
     };
 
@@ -897,12 +909,12 @@
       const item = basket[0];
       const product = PRODUCTS[item.id];
 
-      // If Stripe link isn't set yet, disable Stripe but keep PayPal working
-      const stripeOk = product && product.stripe && !String(product.stripe).startsWith("TODO");
       if (!product){
         setCheckoutState({ disabled: true, stripeText: "Checkout not configured" });
         return;
       }
+
+      const stripeOk = !!(product.stripe && String(product.stripe).length > 5);
 
       setCheckoutState({
         disabled: false,
@@ -952,7 +964,6 @@
       updateCheckoutLinks();
     }
 
-    // productId-based add (one item max)
     function addToBasket(productId){
       const p = PRODUCTS[productId];
       if (!p) return;
