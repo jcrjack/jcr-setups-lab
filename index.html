@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <!-- Favicon + iOS icon (shows your logo in the tab / bookmarks) -->
- <link rel="icon" href="https://raw.githubusercontent.com/jcrjack/jcr-setups-lab/main/logo.png">
-<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jcrjack/jcr-setups-lab/main/logo.png">
+  <link rel="icon" href="https://raw.githubusercontent.com/jcrjack/jcr-setups-lab/main/logo.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/jcrjack/jcr-setups-lab/main/logo.png">
 
   <!-- Link previews (Discord / Twitter / etc.) -->
   <meta property="og:title" content="🧪JCR Setups Lab 🧪">
@@ -166,30 +166,23 @@
       transform: translateY(-4px);
       box-shadow: 0 12px 30px rgba(0,0,0,0.5);
     }
+
     /* Bigger intro text */
-.intro p{
-  font-size: 1.35rem;
-  line-height: 1.9;
-  max-width: 820px;
-  margin: 0 auto;
-}
-
-.intro strong{
-  color: var(--gold);
-  font-weight: 600;
-}
-/* Reduce gap between header and intro section */
-header + section{
-  margin-top: 1px; 
-}
-
-/* Optional: slightly bigger on desktop only */
-@media (min-width: 900px){
-  .intro p{
-    font-size: 1.3rem;
-  }
-}
-
+    .intro p{
+      font-size: 1.35rem;
+      line-height: 1.9;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .intro strong{
+      color: var(--gold);
+      font-weight: 600;
+    }
+    /* Reduce gap between header and intro section */
+    header + section{ margin-top: 1px; }
+    @media (min-width: 900px){
+      .intro p{ font-size: 1.3rem; }
+    }
 
     /* ---------- Pricing ---------- */
     .pricing-grid{
@@ -204,14 +197,14 @@ header + section{
       background: rgba(255,255,255,0.06);
       border: 2px solid rgba(212,175,55,0.35);
       border-radius: 18px;
-      padding: 38px 26px 26px; /* extra top padding for badge */
+      padding: 38px 26px 26px;
       position: relative;
       transition: 0.25s;
       display:flex;
       flex-direction: column;
       min-height: 320px;
 
-      /* stagger initial state (only used for pricing cards; league overrides below) */
+      /* stagger initial state */
       opacity: 0;
       transform: translateY(18px);
       will-change: opacity, transform;
@@ -356,14 +349,11 @@ header + section{
 
     /* ---------- JCR League section ---------- */
     #league{ margin-top: 80px; }
-
-    /* League card should NOT start hidden */
     #league .price-card{
       opacity: 1;
       transform: none;
       transition: 0.25s;
     }
-
     .league-features{
       list-style:none;
       padding:0;
@@ -489,10 +479,7 @@ header + section{
 <body>
   <nav class="navbar">
     <div class="nav-inner">
-      <a class="brand" href="#" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">
-  JCR Setups Lab
-</a>
-
+      <a class="brand" href="#" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">JCR Setups Lab</a>
 
       <div class="nav-links">
         <a href="#pricing">Pricing</a>
@@ -551,6 +538,7 @@ header + section{
     </p>
 
     <div class="features-wrapper">
+      <!-- MAIN PLANS -->
       <div class="pricing-grid">
 
         <div class="price-card featured">
@@ -591,6 +579,86 @@ header + section{
         </div>
 
       </div>
+
+      <!-- NEW: SINGLE/ BUNDLE PURCHASES -->
+      <div style="margin-top: 34px; text-align:center;">
+        <h3 style="margin-bottom:10px; letter-spacing:0.5px; text-transform:uppercase;">Single / Bundle Purchases</h3>
+        <p style="opacity:0.92; margin-bottom: 18px;">
+          Want just a few items? Grab specific setups or strategies in bundles below.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="badge">AFFORDABLE</div>
+          <h3>1 Setup</h3>
+          <div class="price">£1.50</div>
+          <ul>
+            <li>♦️1 setup of your choice</li>
+            <li>♦️Easy + cheap option</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('setup1')">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">5 SETUP BUNDLE</div>
+          <h3>5 Setups</h3>
+          <div class="price">£4.99</div>
+          <ul>
+            <li>♦️5 setups of your choice</li>
+            <li>♦️Amazing value</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('setup5')">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">10 SETUP BUNDLE</div>
+          <h3>10 Setups</h3>
+          <div class="price">£7.99</div>
+          <ul>
+            <li>♦️10 setups of your choice</li>
+            <li>♦️Best specific setup bundle</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('setup10')">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">CHEAPEST</div>
+          <h3>1 Strategy</h3>
+          <div class="price">£1.00</div>
+          <ul>
+            <li>♦️1 strategy of your choice</li>
+            <li>♦️Tyre + fuel + battery info </li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('strat1')">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">5 STRATEGY BUNDLE</div>
+          <h3>5 Strategies</h3>
+          <div class="price">£2.99</div>
+          <ul>
+            <li>♦️5 strategies of your choice</li>
+            <li>♦️Awesome value</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('strat5')">Add to Basket</button>
+        </div>
+
+        <div class="price-card">
+          <div class="badge">10 STRATEGY BUNDLE</div>
+          <h3>10 Strategies</h3>
+          <div class="price">£4.99</div>
+          <ul>
+            <li>♦️10 strategies of your choice</li>
+            <li>♦️Best specific strategy bundle</li>
+          </ul>
+          <button class="btn small" type="button" onclick="addToBasket('strat10')">Add to Basket</button>
+        </div>
+      </div>
+
+      <p style="opacity:0.8; margin-top: 14px;">
+        
+      </p>
     </div>
   </section>
 
@@ -764,6 +832,7 @@ header + section{
     });
 
     // ------- Basket / checkout logic (PRODUCT IDS so it never breaks) -------
+    // IMPORTANT: Add your Stripe Checkout links for the new items where it says TODO STRIPE.
     const PRODUCTS = {
       premium: {
         name: "JCR Premium (Full Access)",
@@ -779,7 +848,17 @@ header + section{
         name: "All Strategies",
         price: 6.99,
         stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03"
-      }
+      },
+
+      // ---- NEW: Setup bundles ----
+      setup1:  { name: "1 Setup",  price: 1.50, stripe: "https://buy.stripe.com/14A00ibiQavT66I9Ns6kg04" },
+      setup5:  { name: "5 Setups", price: 4.99, stripe: "https://buy.stripe.com/4gM5kC1Ig6fD0Mo9Ns6kg05" },
+      setup10: { name: "10 Setups", price: 7.99, stripe: "https://buy.stripe.com/14AaEW0EcavT0Mo0cS6kg06" },
+
+      // ---- NEW: Strategy bundles ----
+      strat1:  { name: "1 Strategy",  price: 1.00, stripe: "https://buy.stripe.com/28E5kC2MkcE1gLmgbQ6kg07" },
+      strat5:  { name: "5 Strategies", price: 2.99, stripe: "https://buy.stripe.com/00w5kCaeM1ZnfHi7Fk6kg08" },
+      strat10: { name: "10 Strategies", price: 4.99, stripe: "https://buy.stripe.com/14A4gy72A0Vj66I9Ns6kg09" }
     };
 
     const PAYPAL_USERNAME = "jackmaltbysmith";
@@ -818,17 +897,26 @@ header + section{
       const item = basket[0];
       const product = PRODUCTS[item.id];
 
-      if (!product || !product.stripe){
+      // If Stripe link isn't set yet, disable Stripe but keep PayPal working
+      const stripeOk = product && product.stripe && !String(product.stripe).startsWith("TODO");
+      if (!product){
         setCheckoutState({ disabled: true, stripeText: "Checkout not configured" });
         return;
       }
 
       setCheckoutState({
         disabled: false,
-        stripeHref: product.stripe,
+        stripeHref: stripeOk ? product.stripe : "#",
         paypalHref: paypalLinkForAmount(product.price),
-        stripeText: "Pay with Card / Apple Pay (Stripe)"
+        stripeText: stripeOk ? "Pay with Card / Apple Pay (Stripe)" : "Stripe link not set (PayPal works)"
       });
+
+      // If Stripe isn't configured, prevent clicking it
+      const stripeBtn = document.getElementById("stripeCheckoutBtn");
+      if (stripeBtn){
+        stripeBtn.style.pointerEvents = stripeOk ? "auto" : "none";
+        stripeBtn.style.opacity = stripeOk ? "1" : "0.55";
+      }
     }
 
     function updateBasketUI(){
