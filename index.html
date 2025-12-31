@@ -204,9 +204,9 @@
       flex-direction: column;
       min-height: 320px;
 
-      /* stagger initial state */
-      opacity: 0;
-      transform: translateY(18px);
+      /* ✅ SAFARI FIX: cards are visible by default */
+      opacity: 1;
+      transform: none;
       will-change: opacity, transform;
     }
     .price-card:hover{
@@ -268,32 +268,14 @@
       box-shadow: 0 6px 18px rgba(212,175,55,0.55);
     }
 
-    /* Premium glow for featured (only after reveal) */
+    /* Premium glow for featured */
     @keyframes premiumGlow{
       0%   { box-shadow: 0 0 0 rgba(212,175,55,0.18); }
       50%  { box-shadow: 0 0 24px rgba(212,175,55,0.38); }
       100% { box-shadow: 0 0 0 rgba(212,175,55,0.18); }
     }
-
-    /* ---------- Stagger reveal (pricing cards) ---------- */
-    .price-card.is-visible{
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 650ms ease, transform 650ms ease;
-    }
-    .price-card.featured.is-visible{
-      transform: translateY(0) scale(1.02);
+    .price-card.featured{
       animation: premiumGlow 3.5s ease-in-out infinite;
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .price-card, .price-card.is-visible{
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-        animation: none !important;
-      }
-      .price-card.featured .badge{ animation: none !important; }
     }
 
     /* ---------- Reviews ---------- */
@@ -628,7 +610,7 @@
           <div class="price">£1.00</div>
           <ul>
             <li>♦️1 strategy of your choice</li>
-            <li>♦️Tyre + fuel + battery info </li>
+            <li>♦️Tyre + fuel + battery info</li>
           </ul>
           <button class="btn small" type="button" onclick="addToBasket('strat1')">Add to Basket</button>
         </div>
@@ -719,6 +701,22 @@
             <span>Affiliate/Streamer</span>
           </div>
         </div>
+
+        <!-- ✅ NEW REVIEW: Oceanblade -->
+        <div class="review-card">
+          <div class="review-top">
+            <span class="stars">★★★★★</span>
+            <span class="pill">Setups</span>
+          </div>
+          <p class="review-text">
+            “Setups feel great so far very stable 😎”
+          </p>
+          <div class="review-author">
+            <strong>Oceanblade</strong>
+            <span>Customer</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -807,43 +805,6 @@
   </aside>
 
   <script>
-    // ------- Stagger reveal for pricing cards (Safari fallback so Pricing always loads) -------
-    document.addEventListener("DOMContentLoaded", () => {
-      const pricingSection = document.querySelector("#pricing");
-      const cards = document.querySelectorAll("#pricing .price-card");
-      if (!pricingSection || !cards.length) return;
-
-      const reveal = () => {
-        cards.forEach((card, i) => {
-          card.style.transitionDelay = `${i * 140}ms`;
-          card.classList.add("is-visible");
-        });
-      };
-
-      // Fallback for older iOS Safari (no IntersectionObserver)
-      if (!("IntersectionObserver" in window)) {
-        reveal();
-        return;
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          reveal();
-          observer.disconnect();
-        });
-      }, { threshold: 0.2 });
-
-      observer.observe(pricingSection);
-
-      // Extra safety: if page loads mid-scroll / Safari glitches, reveal anyway
-      setTimeout(() => {
-        const rect = pricingSection.getBoundingClientRect();
-        const inView = rect.top < window.innerHeight && rect.bottom > 0;
-        if (inView) reveal();
-      }, 300);
-    });
-
     // ------- Basket / checkout logic (PRODUCT IDS so it never breaks) -------
     const PRODUCTS = {
       premium: {
@@ -862,12 +823,10 @@
         stripe: "https://buy.stripe.com/eVq00i0EcfQdcv63p46kg03"
       },
 
-      // ---- NEW: Setup bundles ----
       setup1:  { name: "1 Setup",   price: 1.50, stripe: "https://buy.stripe.com/14A00ibiQavT66I9Ns6kg04" },
       setup5:  { name: "5 Setups",  price: 4.99, stripe: "https://buy.stripe.com/4gM5kC1Ig6fD0Mo9Ns6kg05" },
       setup10: { name: "10 Setups", price: 7.99, stripe: "https://buy.stripe.com/14AaEW0EcavT0Mo0cS6kg06" },
 
-      // ---- NEW: Strategy bundles ----
       strat1:  { name: "1 Strategy",    price: 1.00, stripe: "https://buy.stripe.com/28E5kC2MkcE1gLmgbQ6kg07" },
       strat5:  { name: "5 Strategies",  price: 2.99, stripe: "https://buy.stripe.com/00w5kCaeM1ZnfHi7Fk6kg08" },
       strat10: { name: "10 Strategies", price: 4.99, stripe: "https://buy.stripe.com/14A4gy72A0Vj66I9Ns6kg09" }
@@ -923,7 +882,6 @@
         stripeText: stripeOk ? "Pay with Card / Apple Pay (Stripe)" : "Stripe link not set (PayPal works)"
       });
 
-      // If Stripe isn't configured, prevent clicking it
       const stripeBtn = document.getElementById("stripeCheckoutBtn");
       if (stripeBtn){
         stripeBtn.style.pointerEvents = stripeOk ? "auto" : "none";
